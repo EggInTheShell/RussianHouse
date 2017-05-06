@@ -17,13 +17,20 @@ train_all = np.concatenate([traindata, train2],axis=1)
 
 #データの標準化
 train_copy = np.copy(train_all)
-train_std = (train_copy - train_copy.mean()) / train_copy.std()
-
+train_std = (train_copy -np.mean(train_copy, axis = 0)) / np.std(train_copy, axis = 0)
 
 #save
-savepath = 'train_std.pkl'
+savepath = 'train_zvalue.pkl'
 with open(savepath, mode='wb') as f:
    pickle.dump(train_std, f)
+
+savepath = 'train_mean.pkl'
+with open(savepath, mode='wb') as f:
+   pickle.dump(np.mean(train_copy, axis = 0), f)
+
+savepath = 'train_std.pkl'
+with open(savepath, mode='wb') as f:
+   pickle.dump(np.std(train_copy, axis = 0), f)
 
 #testも同様
 test_data1 = pd.read_csv('rawdata/test_new_non_categorical.csv')
@@ -40,9 +47,14 @@ test_all = np.concatenate([testdata, test2],axis=1)
 
 
 #データの標準化
+#Todo データの結合の順番を変えて、scoreを最後の列にして取り出しやすくする
 test_copy = np.copy(test_all)
-test_std = (test_copy - train_copy.mean()) / train_copy.std()
+test_std =  np.zeros_like(test_copy)
+test_std[:,:277] = (test_copy[:,:277] - np.mean(train_copy, axis = 0)[:277]) / np.std(train_copy, axis = 0)[:277]
+test_std[:,277:] = (test_copy[:,277:] - np.mean(train_copy, axis = 0)[278:]) / np.std(train_copy, axis = 0)[278:]
 
-savepath = 'test_std.pkl'
+savepath = 'test_zvalue.pkl'
 with open(savepath, mode='wb') as f:
    pickle.dump(test_std, f)
+   #Todo dataの0列目を読み込んでいるのが意味が無いので削除したい
+   #Todo categorical dataは[0 1]のままでいいのでは？

@@ -69,8 +69,8 @@ temp_categorical_dummy = pd.get_dummies(temp_categorical[temp_categorical_lists]
 ##new_categorical =np_utils.to_categorical(temp_categorical_dummy)
 
 #save csv files
-new_non_categorical.to_csv('new_non_categorical.csv')
-temp_categorical_dummy.to_csv('new_categorical_dummy.csv')
+new_non_categorical.to_csv('train_new_non_categorical_train.csv')
+temp_categorical_dummy.to_csv('train_new_categorical_dummy_train.csv')
 
 ####convert test data
 test_data = pd.read_csv('test.csv', header=0)
@@ -79,5 +79,5 @@ new_non_categorical_test = test_data[non_categorical_test].replace(np.nan,'-1')
 temp_categorical_test = (test_data[categorical]).replace(np.nan,'-1')
 temp_categorical_lists_test = test_data[categorical].columns
 temp_categorical_dummy_test = pd.get_dummies(temp_categorical_test[temp_categorical_lists_test])
-new_non_categorical.to_csv('new_non_categorical_test.csv')
-temp_categorical_dummy.to_csv('new_categorical_dummy_test.csv')
+new_non_categorical_test.to_csv('test_new_non_categorical.csv')
+temp_categorical_dummy_test.to_csv('test_new_categorical_dummy.csv')

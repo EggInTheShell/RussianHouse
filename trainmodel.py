@@ -96,7 +96,7 @@ NUM_DATA = 30471 #Todo スマートじゃない
 EPOCH = 1000
 
 num_batches = int(NUM_DATA / BATCHSIZE)
-datapath = 'train_std.pkl'
+datapath = 'train_zvalue.pkl'
 gen = batch_generator(datapath=datapath, batchsize=BATCHSIZE, step=num_batches, )
 
 # build model
